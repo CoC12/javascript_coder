@@ -13,5 +13,163 @@
         "<code>button</code>要素がクリックされるとき、<code>input</code>要素A, <code>input</code>要素Bには値が入力済みである。"
     ],
     "html": "<div>\n    <input id=\"number-a\" placeholder=\"number-a\">\n    <input id=\"number-b\" placeholder=\"number-b\">\n    <button id=\"button\">計算</button>\n</div>\n<div>\n    <span id=\"answer\"></span>\n</div>",
-    "editorDefault": "document.addEventListener('DOMContentLoaded', () => {\n    // Your JavaScript code here.\n});\n"
+    "editorDefault": "document.addEventListener('DOMContentLoaded', () => {\n    // Your JavaScript code here.\n});\n",
+    "testCases": [
+        {
+            "id": "case-1",
+            "name": "通常テスト1",
+            "description": "「2」と「3」の和が正しいことをテストします。",
+            "steps": [
+                {
+                    "type": "input",
+                    "selector": "#number-a",
+                    "value": "2"
+                },
+                {
+                    "type": "input",
+                    "selector": "#number-b",
+                    "value": "3"
+                },
+                {
+                    "type": "click",
+                    "selector": "#button"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#answer",
+                    "value": "5"
+                }
+            ]
+        },
+        {
+            "id": "case-2",
+            "name": "通常テスト2",
+            "description": "「7」と「5」の和が正しいことをテストします。",
+            "steps": [
+                {
+                    "type": "input",
+                    "selector": "#number-a",
+                    "value": "7"
+                },
+                {
+                    "type": "input",
+                    "selector": "#number-b",
+                    "value": "5"
+                },
+                {
+                    "type": "click",
+                    "selector": "#button"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#answer",
+                    "value": "12"
+                }
+            ]
+        },
+        {
+            "id": "case-3",
+            "name": "通常テスト3",
+            "description": "「58」と「124」の和が正しいことをテストします。",
+            "steps": [
+                {
+                    "type": "input",
+                    "selector": "#number-a",
+                    "value": "58"
+                },
+                {
+                    "type": "input",
+                    "selector": "#number-b",
+                    "value": "124"
+                },
+                {
+                    "type": "click",
+                    "selector": "#button"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#answer",
+                    "value": "182"
+                }
+            ]
+        },
+        {
+            "id": "case-4",
+            "name": "境界値テスト1",
+            "description": "「0」と「0」の和が正しいことをテストします。",
+            "steps": [
+                {
+                    "type": "input",
+                    "selector": "#number-a",
+                    "value": "0"
+                },
+                {
+                    "type": "input",
+                    "selector": "#number-b",
+                    "value": "0"
+                },
+                {
+                    "type": "click",
+                    "selector": "#button"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#answer",
+                    "value": "0"
+                }
+            ]
+        },
+        {
+            "id": "case-5",
+            "name": "境界値テスト2",
+            "description": "「1000」と「1000」の和が正しいことをテストします。",
+            "steps": [
+                {
+                    "type": "input",
+                    "selector": "#number-a",
+                    "value": "1000"
+                },
+                {
+                    "type": "input",
+                    "selector": "#number-b",
+                    "value": "1000"
+                },
+                {
+                    "type": "click",
+                    "selector": "#button"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#answer",
+                    "value": "2000"
+                }
+            ]
+        },
+        {
+            "id": "case-6",
+            "name": "境界値テスト3",
+            "description": "「0」と「1000」の和が正しいことをテストします。",
+            "steps": [
+                {
+                    "type": "input",
+                    "selector": "#number-a",
+                    "value": "0"
+                },
+                {
+                    "type": "input",
+                    "selector": "#number-b",
+                    "value": "1000"
+                },
+                {
+                    "type": "click",
+                    "selector": "#button"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#answer",
+                    "value": "1000"
+                }
+            ]
+        }
+    ]
 }

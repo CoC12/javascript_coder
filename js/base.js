@@ -84,24 +84,53 @@ class QuestionDisplayManager {
             const element = questionDetailNode.querySelector(key);
             element.innerHTML = value;
         });
-        // サンドボックス環境のセットアップ
-        const result = questionDetailNode.querySelector('.js-result');
-        const editor = questionDetailNode.querySelector('.js-editor');
-        const deploy = questionDetailNode.querySelector('.js-deploy');
-        this.#buildSandbox(question.html, editor.innerText, result);
-        deploy.addEventListener('click', () => {
-            this.#buildSandbox(question.html, editor.innerText, result);
-        });
         // エディタのセットアップ
+        const editor = questionDetailNode.querySelector('.js-editor');
+        const result = questionDetailNode.querySelector('.js-result');
+        const deploy = questionDetailNode.querySelector('.js-deploy');
+        const scoreTableBody = questionDetailNode.querySelector('.js-score-table-body');
+        const virtualEnv = questionDetailNode.querySelector('.js-virtual-env');
+        const scoringButtonElement = questionDetailNode.querySelector('.js-scoring');
         require.config({ paths: { vs: 'js/lib/monaco-editor/vs' } });
         require(['vs/editor/editor.main'], () => {
-            monaco.editor.create(
+            const monacoEditor = monaco.editor.create(
                 editor,
                 {
                     value: question.editorDefault,
                     language: 'javascript',
                 },
             );
+            // サンドボックス環境のセットアップ
+            result.appendChild(this.#buildSandbox(question.html, monacoEditor.getValue()));
+            deploy.addEventListener('click', () => {
+                result.innerHTML = '';
+                result.appendChild(this.#buildSandbox(question.html, monacoEditor.getValue()));
+            });
+            // 採点のセットアップ
+            scoreTableBody.innerHTML = question.testCases.map((testCase) => {
+                return (
+                    `<tr data-id="${testCase.id}">
+                        <td>${testCase.name}</td>
+                        <td class="js-score-result">-</td>
+                    </tr>`
+                )
+            }).join('');
+            scoringButtonElement.addEventListener('click', () => {
+                // 採点環境の初期化
+                virtualEnv.innerHTML = '';
+                // コードの採点
+                question.testCases.forEach((testCase) => {
+                    const tableRow = scoreTableBody.querySelector(`[data-id="${testCase.id}"]`);
+                    const scoreResultElement = tableRow.querySelector('.js-score-result');
+                    this.#scoreCode(
+                        virtualEnv,
+                        testCase,
+                        question.html,
+                        monacoEditor.getValue(),
+                        scoreResultElement,
+                    );
+                });
+            });
         });
         return questionDetailNode;
     }
@@ -110,9 +139,9 @@ class QuestionDisplayManager {
      * サンドボックス環境を生成する。
      * @param {string} html HTML文字列
      * @param {string} script JavaScript文字列
-     * @param {Element} targetElement サンドボックス環境の生成先の要素
+     * @returns {HTMLIFrameElement} サンドボックス環境のiframe要素
      */
-    #buildSandbox = (html, script, targetElement) => {
+    #buildSandbox = (html, script) => {
         const sandboxBlob = new Blob(
             [html, `<script>${script}</script>`],
             { type: 'text/html' },
@@ -120,8 +149,33 @@ class QuestionDisplayManager {
         const sandboxBlobURL = URL.createObjectURL(sandboxBlob);
         const iframeElement = document.createElement('iframe');
         iframeElement.src = sandboxBlobURL;
+        return iframeElement
+    };
 
-        targetElement.innerHTML = '';
-        targetElement.appendChild(iframeElement);
+    /**
+     * コードを採点し、結果を更新する。
+     * @param {Element} virtualEnv コードの採点用の要素
+     * @param {TestCase} testCase TestCase オブジェクト
+     * @param {string} html HTML文字列
+     * @param {string} script JavaScript文字列
+     * @param {Element} scoreResultElement 採点結果を表示する要素
+     */
+    #scoreCode = (
+        virtualEnv,
+        testCase,
+        html,
+        script,
+        scoreResultElement,
+    ) => {
+        const iframeElement = this.#buildSandbox(html, script);
+        iframeElement.addEventListener('load', () => {
+            const isAccepted = testCase.isAccepted(iframeElement.contentDocument);
+            scoreResultElement.innerHTML = (
+                isAccepted
+                    ? '<span class="c-question-detail__score score-ac">AC</span>'
+                    : '<span class="c-question-detail__score score-wa">WA</span>'
+            );
+        });
+        virtualEnv.appendChild(iframeElement);
     };
 }
