@@ -90,20 +90,23 @@ class TestCase {
         try {
             this.steps.forEach((step) => {
                 const element = targetDocument.querySelector(step.selector);
-                switch (step.type) {
-                    case 'input':
-                        element.value = step.value;
-                        break;
-                    case 'click':
-                        element.click();
-                        break;
-                    case 'assert':
-                        if (element.textContent !== step.value) {
-                            throw new Error(`Assertion failed: ${element.textContent} !== ${step.value}`);
-                        }
-                        break;
-                    default:
-                        throw new Error(`Unknown step type: ${step.type}`);
+                const repeatCount = step.repeat || 1;
+                for (let i = 0; i < repeatCount; i++) {
+                    switch (step.type) {
+                        case 'input':
+                            element.value = step.value;
+                            break;
+                        case 'click':
+                            element.click();
+                            break;
+                        case 'assert':
+                            if (element.textContent !== step.value) {
+                                throw new Error(`Assertion failed: ${element.textContent} !== ${step.value}`);
+                            }
+                            break;
+                        default:
+                            throw new Error(`Unknown step type: ${step.type}`);
+                    }
                 }
             });
         } catch {

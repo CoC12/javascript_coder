@@ -1,0 +1,165 @@
+{
+    "id": "A-002",
+    "title": "カウンター",
+    "textList": [
+        "<code>button</code>要素（カウントアップ）, <code>button</code>要素（リセット）が与えられます。<code>button</code>要素（カウントアップ）をクリックしたときに、現在のカウント値を<code>1</code>増加させます。<code>button</code>要素（リセット）をクリックしたときに、現在のカウント値を初期値に戻します。",
+        "現在のカウント値を、<code>Counter: {現在のカウント値}</code>の形式で<code>id=\"counter\"</code>要素の<code>textContent</code>として出力してください。例えば、<code>button</code>要素（カウントアップ）が5回クリックされた場合、出力は<code>Counter: 5</code>となります。"
+    ],
+    "limitationList": [
+        "<code>button</code>要素（カウントアップ）には、<code>id=\"count-up\"</code>が付与されている。",
+        "<code>button</code>要素（リセット）には、<code>id=\"reset\"</code>が付与されている。",
+        "現在のカウント値の初期値は<code>0</code>である。",
+        "<code>button</code>要素（カウントアップ）がクリックされる回数は、<code>0</code>以上<code>100</code>以下である。"
+    ],
+    "html": "<div>\n    <button id=\"count-up\">カウントアップ</button>\n    <button id=\"reset\">リセット</button>\n</div>\n<div>\n    <span id=\"counter\"></span>\n</div>",
+    "editorDefault": "document.addEventListener('DOMContentLoaded', () => {\n    // Your JavaScript code here.\n});\n",
+    "testCases": [
+        {
+            "id": "case-1",
+            "name": "通常テスト1",
+            "description": "カウントアップ回数が「0」回の場合にカウント値が正しいことをテストします。",
+            "steps": [
+                {
+                    "type": "assert",
+                    "selector": "#counter",
+                    "value": "Counter: 0"
+                }
+            ]
+        },
+        {
+            "id": "case-2",
+            "name": "通常テスト2",
+            "description": "カウントアップ回数が「1」回の場合にカウント値が正しいことをテストします。",
+            "steps": [
+                {
+                    "type": "click",
+                    "selector": "#count-up"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#counter",
+                    "value": "Counter: 1"
+                }
+            ]
+        },
+        {
+            "id": "case-3",
+            "name": "通常テスト3",
+            "description": "カウントアップ回数が「5」回の場合にカウント値が正しいことをテストします。",
+            "steps": [
+                {
+                    "type": "click",
+                    "selector": "#count-up",
+                    "repeat": 5
+                },
+                {
+                    "type": "assert",
+                    "selector": "#counter",
+                    "value": "Counter: 5"
+                }
+            ]
+        },
+        {
+            "id": "case-4",
+            "name": "通常テスト4",
+            "description": "カウントアップ回数が「0」回の場合に、リセット時のカウント値が正しいことをテストします。",
+            "steps": [
+                {
+                    "type": "click",
+                    "selector": "#reset"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#counter",
+                    "value": "Counter: 0"
+                }
+            ]
+        },
+        {
+            "id": "case-5",
+            "name": "通常テスト5",
+            "description": "カウントアップ回数が「5」回の場合に、リセット時のカウント値が正しいことをテストします。",
+            "steps": [
+                {
+                    "type": "click",
+                    "selector": "#count-up",
+                    "repeat": 5
+                },
+                {
+                    "type": "click",
+                    "selector": "#reset"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#counter",
+                    "value": "Counter: 0"
+                }
+            ]
+        },
+        {
+            "id": "case-6",
+            "name": "通常テスト6",
+            "description": "リセット後のカウントアップ時に、カウント値が正しいことをテストします。",
+            "steps": [
+                {
+                    "type": "click",
+                    "selector": "#count-up",
+                    "repeat": 5
+                },
+                {
+                    "type": "click",
+                    "selector": "#reset"
+                },
+                {
+                    "type": "click",
+                    "selector": "#count-up",
+                    "repeat": 20
+                },
+                {
+                    "type": "assert",
+                    "selector": "#counter",
+                    "value": "Counter: 20"
+                }
+            ]
+        },
+        {
+            "id": "case-7",
+            "name": "通常テスト7",
+            "description": "リセット回数が「5」回の場合に、リセット時のカウント値が正しいことをテストします。",
+            "steps": [
+                {
+                    "type": "click",
+                    "selector": "#count-up",
+                    "repeat": 5
+                },
+                {
+                    "type": "click",
+                    "selector": "#reset",
+                    "repeat": 5
+                },
+                {
+                    "type": "assert",
+                    "selector": "#counter",
+                    "value": "Counter: 0"
+                }
+            ]
+        },
+        {
+            "id": "case-8",
+            "name": "境界値テスト1",
+            "description": "カウントアップ回数が「100」回の場合にカウント値が正しいことをテストします。",
+            "steps": [
+                {
+                    "type": "click",
+                    "selector": "#count-up",
+                    "repeat": 100
+                },
+                {
+                    "type": "assert",
+                    "selector": "#counter",
+                    "value": "Counter: 100"
+                }
+            ]
+        }
+    ]
+}

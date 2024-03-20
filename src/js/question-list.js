@@ -6,6 +6,10 @@ const questionListData = [
                 'id': 'a-001',
                 'label': 'A-001: 足し算',
             },
+            {
+                'id': 'a-002',
+                'label': 'A-002: カウンター',
+            },
         ],
     },
     {
