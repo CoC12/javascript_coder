@@ -1,0 +1,17 @@
+{
+    "id": "A-001",
+    "title": "足し算",
+    "textList": [
+        "<code>input</code>要素A、<code>input</code>要素B、<code>button</code>要素が与えられます。",
+        "<code>button</code>要素をクリックしたときに、<code>input</code>要素Aの入力値と<code>input</code>要素Bの入力値の和を計算し、<code>id=\"answer\"</code>要素の<code>textContent</code>として出力してください。"
+    ],
+    "limitationList": [
+        "<code>input</code>要素Aには、<code>id=\"number-a\"</code>が付与されている。",
+        "<code>input</code>要素Bには、<code>id=\"number-b\"</code>が付与されている。",
+        "<code>button</code>要素には、<code>id=\"button\"</code>が付与されている。",
+        "<code>input</code>要素A, <code>input</code>要素Bに入力される値は、<code>0</code>以上<code>1000</code>以下の整数である。",
+        "<code>button</code>要素がクリックされるとき、<code>input</code>要素A, <code>input</code>要素Bには値が入力済みである。"
+    ],
+    "html": "<div>\n    <input id=\"number-a\" placeholder=\"number-a\">\n    <input id=\"number-b\" placeholder=\"number-b\">\n    <button id=\"button\">計算</button>\n</div>\n<div>\n    <span id=\"answer\"></span>\n</div>",
+    "editorDefault": "document.addEventListener('DOMContentLoaded', () => {\n    // Your JavaScript code here.\n});\n"
+}
