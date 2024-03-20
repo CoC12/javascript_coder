@@ -84,46 +84,52 @@ class QuestionDisplayManager {
             const element = questionDetailNode.querySelector(key);
             element.innerHTML = value;
         });
-        // サンドボックス環境のセットアップ
-        const result = questionDetailNode.querySelector('.js-result');
-        const editor = questionDetailNode.querySelector('.js-editor');
-        const deploy = questionDetailNode.querySelector('.js-deploy');
-        result.appendChild(this.#buildSandbox(question.html, editor.innerText));
-        deploy.addEventListener('click', () => {
-            result.innerHTML = '';
-            result.appendChild(this.#buildSandbox(question.html, editor.innerText));
-        });
         // エディタのセットアップ
+        const editor = questionDetailNode.querySelector('.js-editor');
+        const result = questionDetailNode.querySelector('.js-result');
+        const deploy = questionDetailNode.querySelector('.js-deploy');
+        const scoreTableBody = questionDetailNode.querySelector('.js-score-table-body');
+        const virtualEnv = questionDetailNode.querySelector('.js-virtual-env');
+        const scoringButtonElement = questionDetailNode.querySelector('.js-scoring');
         require.config({ paths: { vs: 'js/lib/monaco-editor/vs' } });
         require(['vs/editor/editor.main'], () => {
-            monaco.editor.create(
+            const monacoEditor = monaco.editor.create(
                 editor,
                 {
                     value: question.editorDefault,
                     language: 'javascript',
                 },
             );
-        });
-        // 採点のセットアップ
-        const scoreTableBody = questionDetailNode.querySelector('.js-score-table-body');
-        scoreTableBody.innerHTML = question.testCases.map((testCase) => {
-            return (
-                `<tr data-id="${testCase.id}">
-                    <td>${testCase.name}</td>
-                    <td class="js-score-result">-</td>
-                </tr>`
-            )
-        }).join('');
-        const virtualEnv = questionDetailNode.querySelector('.js-virtual-env');
-        const scoringButtonElement = questionDetailNode.querySelector('.js-scoring');
-        scoringButtonElement.addEventListener('click', () => {
-            // 採点環境の初期化
-            virtualEnv.innerHTML = '';
-            // コードの採点
-            question.testCases.forEach((testCase) => {
-                const tableRow = scoreTableBody.querySelector(`[data-id="${testCase.id}"]`);
-                const scoreResultElement = tableRow.querySelector('.js-score-result');
-                this.#scoreCode(virtualEnv, testCase, question.html, editor.innerText, scoreResultElement);
+            // サンドボックス環境のセットアップ
+            result.appendChild(this.#buildSandbox(question.html, monacoEditor.getValue()));
+            deploy.addEventListener('click', () => {
+                result.innerHTML = '';
+                result.appendChild(this.#buildSandbox(question.html, monacoEditor.getValue()));
+            });
+            // 採点のセットアップ
+            scoreTableBody.innerHTML = question.testCases.map((testCase) => {
+                return (
+                    `<tr data-id="${testCase.id}">
+                        <td>${testCase.name}</td>
+                        <td class="js-score-result">-</td>
+                    </tr>`
+                )
+            }).join('');
+            scoringButtonElement.addEventListener('click', () => {
+                // 採点環境の初期化
+                virtualEnv.innerHTML = '';
+                // コードの採点
+                question.testCases.forEach((testCase) => {
+                    const tableRow = scoreTableBody.querySelector(`[data-id="${testCase.id}"]`);
+                    const scoreResultElement = tableRow.querySelector('.js-score-result');
+                    this.#scoreCode(
+                        virtualEnv,
+                        testCase,
+                        question.html,
+                        monacoEditor.getValue(),
+                        scoreResultElement,
+                    );
+                });
             });
         });
         return questionDetailNode;
