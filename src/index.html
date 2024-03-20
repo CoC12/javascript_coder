@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>JavaScript Coder</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/base.css" rel="stylesheet" type="text/css">
+        <link href="css/question-detail.css" rel="stylesheet" type="text/css">
+        <link href="css/lib/prismjs/prism.css" rel="stylesheet" type="text/css">
+        <script src="js/base.js" type="text/javascript" defer></script>
+        <script src="js/question.js" type="text/javascript" defer></script>
+        <script src="js/question-list.js" type="text/javascript" defer></script>
+        <script src="js/lib/prismjs/prism.js" type="text/javascript" defer></script>
+        <script src="js/lib/monaco-editor/vs/loader.js" type="text/javascript" defer></script>
+    </head>
+    <body>
+        <header>
+            <h1 class="l-header__title">
+                JavaScript Coder
+            </h1>
+        </header>
+        <main>
+            <div class="l-main__content">
+                <div id="id-question-list-container"></div>
+                <div id="id-question-detail-container"></div>
+            </div>
+        </main>
+        <template id="id-template__question-list-item">
+            <h3 class="js-difficulty"></h3>
+            <ul class="js-question-container"></ul>
+        </template>
+        <template id="id-template__question-detail">
+            <div class="c-question-detail__back-to-list">
+                <a class="c-question-detail__back-to-list-link" href=".">
+                    問題一覧に戻る
+                </a>
+            </div>
+            <h2 class="c-question-detail__question-title">
+                <span class="js-id"></span>: <span class="js-title"></span>
+            </h2>
+            <div class="c-question-detail__section">
+                <h3 class="c-question-detail__section-header">
+                    問題文
+                </h3>
+                <div class="js-text"></div>
+            </div>
+            <div class="c-question-detail__section">
+                <h3 class="c-question-detail__section-header">
+                    制約
+                </h3>
+                <div>
+                    <ul class="js-limitation"></ul>
+                </div>
+            </div>
+            <div class="c-question-detail__sandbox-container">
+                <div class="c-question-detail__sandbox-html">
+                    <div class="c-question-detail__sandbox-label-container">
+                        <h4 class="c-question-detail__sandbox-label">
+                            HTML
+                        </h4>
+                    </div>
+                    <pre class="language-html js-html">
+                    </pre>
+                </div>
+                <div class="c-question-detail__sandbox-result">
+                    <div class="c-question-detail__sandbox-label-container">
+                        <h4 class="c-question-detail__sandbox-label">
+                            結果
+                        </h4>
+                    </div>
+                    <div class="js-result"></div>
+                </div>
+                <div class="c-question-detail__sandbox-source-code">
+                    <div class="c-question-detail__sandbox-label-container">
+                        <h4 class="c-question-detail__sandbox-label">
+                            ソースコード
+                        </h4>
+                        <button class="c-question-detail__sandbox-deploy js-deploy">
+                            反映
+                        </button>
+                    </div>
+                    <div class="c-question-detail__sandbox-editor js-editor"></div>
+                </div>
+            </div>
+        </template>
+    </body>
+</html>
