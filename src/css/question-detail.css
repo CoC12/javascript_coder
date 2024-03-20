@@ -34,19 +34,6 @@
         .c-question-detail__sandbox-label {
             margin: 12px 0;
         }
-
-        .c-question-detail__sandbox-deploy {
-            padding: 4px 16px;
-            color: #ffffff;
-            cursor: pointer;
-            background-color: var(--color-primary);
-            border: 1px solid var(--color-primary);
-            border-radius: 4px;
-
-            &:hover {
-                background-color: var(--color-primary-hover);
-            }
-        }
     }
 
     .c-question-detail__sandbox-html {
@@ -75,8 +62,33 @@
         }
 
         .c-question-detail__sandbox-editor {
-            min-height: 500px;
+            min-height: 300px;
             border: var(--border);
         }
+
+        .c-question-detail__sandbox-submit {
+            margin-top: 20px;
+            text-align: center;
+        }
     }
+}
+
+.c-question-detail__score {
+    padding: 1px 4px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #ffffff;
+    border-radius: 4px;
+
+    &.score-ac {
+        background-color: #5cb85c;
+    }
+
+    &.score-wa {
+        background-color: #f0ad4e;
+    }
+}
+
+.c-question-detail__score-virtual-env {
+    display: none;
 }

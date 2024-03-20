@@ -75,12 +75,35 @@
                         <h4 class="c-question-detail__sandbox-label">
                             ソースコード
                         </h4>
-                        <button class="c-question-detail__sandbox-deploy js-deploy">
+                        <button class="js-deploy">
                             反映
                         </button>
                     </div>
                     <div class="c-question-detail__sandbox-editor js-editor"></div>
+                    <div class="c-question-detail__sandbox-submit">
+                        <button class="js-scoring">
+                            採点
+                        </button>
+                    </div>
                 </div>
+            </div>
+            <div class="c-question-detail__section">
+                <h3 class="c-question-detail__section-header">
+                    採点結果
+                </h3>
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>テストケース名</th>
+                                <th>結果</th>
+                            </tr>
+                        </thead>
+                        <tbody class="js-score-table-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="c-question-detail__score-virtual-env js-virtual-env"></div>
             </div>
         </template>
     </body>
