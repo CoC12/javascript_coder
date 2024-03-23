@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const questionDisplayManager = new QuestionDisplayManager();
-
     const params = new URLSearchParams(window.location.search);
     const questionId = params.get('qid');
+    const debug = params.get('debug') === 'true';
+
+    const questionDisplayManager = new QuestionDisplayManager(debug);
     if (questionId) {
         fetch(`json/questions/${questionId}.json`).then((response) => {
             return response.json();
@@ -21,8 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
 class QuestionDisplayManager {
     /**
      * コンストラクタ
+     * @param {boolean} debug デバッグモードを有効にするかどうか
      */
-    constructor() {
+    constructor(debug) {
+        this.debug = debug;
         this.listContainerElement = document.querySelector('#id-question-list-container');
         this.listItemTemplateElement = document.querySelector('#id-template__question-list-item');
         this.detailContainerElement = document.querySelector('#id-question-detail-container');
@@ -132,6 +135,10 @@ class QuestionDisplayManager {
                 });
             });
         });
+        // デバッグモード用
+        if (this.debug) {
+            virtualEnv.style.display = 'block';
+        }
         return questionDetailNode;
     }
 
@@ -169,7 +176,7 @@ class QuestionDisplayManager {
     ) => {
         const iframeElement = this.#buildSandbox(html, script);
         iframeElement.addEventListener('load', () => {
-            const isAccepted = testCase.isAccepted(iframeElement.contentDocument);
+            const isAccepted = testCase.isAccepted(iframeElement.contentDocument, this.debug);
             scoreResultElement.innerHTML = (
                 isAccepted
                     ? '<span class="c-question-detail__score score-ac">AC</span>'
