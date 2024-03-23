@@ -83,15 +83,16 @@ class TestCase {
     /**
      * 定義されたテストケース処理を実行し結果を返す。
      * @param {Document} targetDocument テスト対象のDocument
+     * @param {boolean} debug デバッグモードが有効かどうか
      * @returns {boolean} テスト実行結果
      */
-    isAccepted(targetDocument) {
+    isAccepted(targetDocument, debug = false) {
         let result = true;
         try {
             this.steps.forEach((step) => {
-                const element = targetDocument.querySelector(step.selector);
                 const repeatCount = step.repeat || 1;
                 for (let i = 0; i < repeatCount; i++) {
+                    const element = targetDocument.querySelector(step.selector);
                     switch (step.type) {
                         case 'input':
                             element.value = step.value;
@@ -109,7 +110,10 @@ class TestCase {
                     }
                 }
             });
-        } catch {
+        } catch (e) {
+            if (debug) {
+                console.error(`ID: ${this.id}, name: ${this.name}\n`, e);
+            }
             result = false;
         }
         return result;

@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const questionDisplayManager = new QuestionDisplayManager();
-
     const params = new URLSearchParams(window.location.search);
     const questionId = params.get('qid');
+    const debug = params.get('debug') === 'true';
+
+    const questionDisplayManager = new QuestionDisplayManager(debug);
     if (questionId) {
         fetch(`json/questions/${questionId}.json`).then((response) => {
             return response.json();
@@ -21,8 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
 class QuestionDisplayManager {
     /**
      * コンストラクタ
+     * @param {boolean} debug デバッグモードを有効にするかどうか
      */
-    constructor() {
+    constructor(debug) {
+        this.debug = debug;
         this.listContainerElement = document.querySelector('#id-question-list-container');
         this.listItemTemplateElement = document.querySelector('#id-template__question-list-item');
         this.detailContainerElement = document.querySelector('#id-question-detail-container');
@@ -77,12 +80,17 @@ class QuestionDisplayManager {
             '.js-title': question.title,
             '.js-text': question.textList.map(text => `<p>${text}</p>`).join(''),
             '.js-limitation': question.limitationList.map(limitation => `<li>${limitation}</li>`).join(''),
-            '.js-html': Prism.highlight(question.html, Prism.languages.html, 'html'),
+            '.js-html': question.html,
         };
         const questionDetailNode = this.detailTemplateElement.content.cloneNode(true);
         Object.entries(mapping).forEach(([key, value]) => {
             const element = questionDetailNode.querySelector(key);
             element.innerHTML = value;
+        });
+        // HTMLコードのハイライト
+        const htmlCodeNodeList = questionDetailNode.querySelectorAll('.language-html');
+        htmlCodeNodeList.forEach((htmlCodeElement) => {
+            htmlCodeElement.innerHTML = Prism.highlight(htmlCodeElement.innerHTML, Prism.languages.html, 'html');
         });
         // エディタのセットアップ
         const editor = questionDetailNode.querySelector('.js-editor');
@@ -132,6 +140,10 @@ class QuestionDisplayManager {
                 });
             });
         });
+        // デバッグモード用
+        if (this.debug) {
+            virtualEnv.style.display = 'block';
+        }
         return questionDetailNode;
     }
 
@@ -169,7 +181,7 @@ class QuestionDisplayManager {
     ) => {
         const iframeElement = this.#buildSandbox(html, script);
         iframeElement.addEventListener('load', () => {
-            const isAccepted = testCase.isAccepted(iframeElement.contentDocument);
+            const isAccepted = testCase.isAccepted(iframeElement.contentDocument, this.debug);
             scoreResultElement.innerHTML = (
                 isAccepted
                     ? '<span class="c-question-detail__score score-ac">AC</span>'
