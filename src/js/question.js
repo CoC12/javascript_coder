@@ -90,9 +90,9 @@ class TestCase {
         let result = true;
         try {
             this.steps.forEach((step) => {
-                const element = targetDocument.querySelector(step.selector);
                 const repeatCount = step.repeat || 1;
                 for (let i = 0; i < repeatCount; i++) {
+                    const element = targetDocument.querySelector(step.selector);
                     switch (step.type) {
                         case 'input':
                             element.value = step.value;

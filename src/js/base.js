@@ -80,12 +80,17 @@ class QuestionDisplayManager {
             '.js-title': question.title,
             '.js-text': question.textList.map(text => `<p>${text}</p>`).join(''),
             '.js-limitation': question.limitationList.map(limitation => `<li>${limitation}</li>`).join(''),
-            '.js-html': Prism.highlight(question.html, Prism.languages.html, 'html'),
+            '.js-html': question.html,
         };
         const questionDetailNode = this.detailTemplateElement.content.cloneNode(true);
         Object.entries(mapping).forEach(([key, value]) => {
             const element = questionDetailNode.querySelector(key);
             element.innerHTML = value;
+        });
+        // HTMLコードのハイライト
+        const htmlCodeNodeList = questionDetailNode.querySelectorAll('.language-html');
+        htmlCodeNodeList.forEach((htmlCodeElement) => {
+            htmlCodeElement.innerHTML = Prism.highlight(htmlCodeElement.innerHTML, Prism.languages.html, 'html');
         });
         // エディタのセットアップ
         const editor = questionDetailNode.querySelector('.js-editor');

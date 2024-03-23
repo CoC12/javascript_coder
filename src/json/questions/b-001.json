@@ -1,0 +1,421 @@
+{
+    "id": "B-001",
+    "title": "TODOリスト",
+    "textList": [
+        "<code>input</code>要素、<code>button</code>要素（追加）、<code>id=\"todo-list\"</code>要素が与えられます。",
+        "<code>button</code>要素（追加）をクリックしたときに、「TODO要素」を<code>id=\"todo-list\"</code>要素の末尾に追加してください。ただし、「TODO要素」とは以下の条件を満たす要素をいいます。",
+        "<ul><li><code>li</code>要素である。</li><li>直下に<code>class=\"todo-item\"</code>が付与された<code>span</code>要素を1つ持つ。</li><li>直下に<code>class=\"delete-todo\"</code>が付与された<code>button</code>要素（削除）を1つ持つ。</li><li><code>span</code>要素の<code>textContent</code>として、<code>input</code>要素の入力値が出力される。</li><li><code>button</code>要素（削除）の<code>textContent</code>として、文字列<code>Delete</code>が出力される。</li><li><code>button</code>要素（削除）をクリックしたとき、この「TODO要素」が削除される。</li></ul>",
+        "例えば、<code>input</code>要素の入力値が「牛乳を買う」の場合、「TODO要素」は以下のようになります。",
+        "<pre class=\"language-html\"><li>\n    <span class=\"todo-item\">牛乳を買う</span>\n    <button class=\"delete-todo\">Delete</button>\n</li></pre>"
+    ],
+    "limitationList": [
+        "<code>input</code>要素には、<code>id=\"todo-input\"</code>が付与されている。",
+        "<code>button</code>要素（追加）には、<code>id=\"add-todo\"</code>が付与されている。",
+        "<code>button</code>要素（追加）がクリックされるとき、<code>input</code>要素には値が入力済みである。"
+    ],
+    "html": "<div>\n    <input id=\"todo-input\">\n    <button id=\"add-todo\">追加</button>\n</div>\n<div>\n    <ul id=\"todo-list\"></ul>\n</div>",
+    "editorDefault": "document.addEventListener('DOMContentLoaded', () => {\n    // Your JavaScript code here.\n});\n",
+    "testCases": [
+        {
+            "id": "case-1",
+            "name": "TODO追加テスト1",
+            "description": "TODOリストを「1」つ追加した場合に表示が正しいことを確認します。",
+            "steps": [
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "牛乳を買う"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(1) > span.todo-item",
+                    "value": "牛乳を買う"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(1) > button.delete-todo",
+                    "value": "Delete"
+                }
+            ]
+        },
+        {
+            "id": "case-2",
+            "name": "TODO追加テスト2",
+            "description": "TODOリストを「3」つ追加した場合に表示が正しいことを確認します。",
+            "steps": [
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "牛乳を買う"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "メールを返信する"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "掃除をする"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(1) > span.todo-item",
+                    "value": "牛乳を買う"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(1) > button.delete-todo",
+                    "value": "Delete"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(2) > span.todo-item",
+                    "value": "メールを返信する"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(2) > button.delete-todo",
+                    "value": "Delete"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(3) > span.todo-item",
+                    "value": "掃除をする"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(3) > button.delete-todo",
+                    "value": "Delete"
+                }
+            ]
+        },
+        {
+            "id": "case-3",
+            "name": "TODO削除テスト1",
+            "description": "TODOリストを「1」つ追加・「1」つ削除した場合に表示が正しいことを確認します。",
+            "steps": [
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "牛乳を買う"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "click",
+                    "selector": "#todo-list > li:nth-child(1) > button.delete-todo"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "id": "case-4",
+            "name": "TODO削除テスト2",
+            "description": "TODOリストを「3」つ追加・先頭を「1」つ削除した場合に表示が正しいことを確認します。",
+            "steps": [
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "牛乳を買う"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "メールを返信する"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "掃除をする"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "click",
+                    "selector": "#todo-list > li:nth-child(1) > button.delete-todo"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(1) > span.todo-item",
+                    "value": "メールを返信する"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(1) > button.delete-todo",
+                    "value": "Delete"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(2) > span.todo-item",
+                    "value": "掃除をする"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(2) > button.delete-todo",
+                    "value": "Delete"
+                }
+            ]
+        },
+        {
+            "id": "case-5",
+            "name": "TODO削除テスト3",
+            "description": "TODOリストを「3」つ追加・中間を「1」つ削除した場合に表示が正しいことを確認します。",
+            "steps": [
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "牛乳を買う"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "メールを返信する"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "掃除をする"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "click",
+                    "selector": "#todo-list > li:nth-child(2) > button.delete-todo"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(1) > span.todo-item",
+                    "value": "牛乳を買う"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(1) > button.delete-todo",
+                    "value": "Delete"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(2) > span.todo-item",
+                    "value": "掃除をする"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(2) > button.delete-todo",
+                    "value": "Delete"
+                }
+            ]
+        },
+        {
+            "id": "case-6",
+            "name": "TODO削除テスト4",
+            "description": "TODOリストを「3」つ追加・末尾を「1」つ削除した場合に表示が正しいことを確認します。",
+            "steps": [
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "牛乳を買う"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "メールを返信する"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "掃除をする"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "click",
+                    "selector": "#todo-list > li:nth-child(3) > button.delete-todo"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(1) > span.todo-item",
+                    "value": "牛乳を買う"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(1) > button.delete-todo",
+                    "value": "Delete"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(2) > span.todo-item",
+                    "value": "メールを返信する"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(2) > button.delete-todo",
+                    "value": "Delete"
+                }
+            ]
+        },
+        {
+            "id": "case-7",
+            "name": "TODO削除テスト5",
+            "description": "TODOリストを「3」つ追加・「3」つ削除した場合に表示が正しいことを確認します。",
+            "steps": [
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "牛乳を買う"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "メールを返信する"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "掃除をする"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "click",
+                    "selector": "#todo-list > li:nth-child(1) > button.delete-todo",
+                    "repeat": 3
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "id": "case-8",
+            "name": "TODO削除後、再追加テスト6",
+            "description": "TODOリストを削除後、再追加した場合に表示が正しいことを確認します。",
+            "steps": [
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "牛乳を買う"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "メールを返信する"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "掃除をする"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "click",
+                    "selector": "#todo-list > li:nth-child(2) > button.delete-todo",
+                    "repeat": 2
+                },
+                {
+                    "type": "input",
+                    "selector": "#todo-input",
+                    "value": "資料を作成する"
+                },
+                {
+                    "type": "click",
+                    "selector": "#add-todo"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(1) > span.todo-item",
+                    "value": "牛乳を買う"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(1) > button.delete-todo",
+                    "value": "Delete"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(2) > span.todo-item",
+                    "value": "資料を作成する"
+                },
+                {
+                    "type": "assert",
+                    "selector": "#todo-list > li:nth-child(2) > button.delete-todo",
+                    "value": "Delete"
+                }
+            ]
+        }
+    ]
+}
