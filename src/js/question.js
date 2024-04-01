@@ -105,6 +105,11 @@ class TestCase {
                                 throw new Error(`Assertion failed: ${element.textContent} !== ${step.value}`);
                             }
                             break;
+                        case 'assertAttribute':
+                            if (element[step.attribute] !== step.value) {
+                                throw new Error(`Assertion failed: ${element[step.attribute]} !== ${step.value}`);
+                            }
+                            break;
                         default:
                             throw new Error(`Unknown step type: ${step.type}`);
                     }

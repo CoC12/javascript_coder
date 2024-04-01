@@ -1,0 +1,604 @@
+{
+    "id": "A-003",
+    "title": "すべて選択",
+    "textList": [
+        "<code>checkbox</code>型の<code>input</code>要素が<code>4</code>つ与えられ、それぞれ<code>id=\"select-all\"</code>、<code>id=\"item-1\"</code>、<code>id=\"item-2\"</code>、<code>id=\"item-3\"</code>が付与されています。",
+        "以下の条件を満たす<code>JavaScript</code>コードを実装してください。",
+        "<ul><li><code>id=\"select-all\"</code>要素が「選択状態」となったとき、<code>id=\"item-1\"</code>要素、<code>id=\"item-2\"</code>要素、<code>id=\"item-3\"</code>要素をすべて「選択状態」にしてください。</li><li><code>id=\"select-all\"</code>要素が「未選択状態」となったとき、<code>id=\"item-1\"</code>要素、<code>id=\"item-2\"</code>要素、<code>id=\"item-3\"</code>要素をすべて「未選択状態」にしてください。</li><li><code>id=\"item-1\"</code>要素、<code>id=\"item-2\"</code>要素、<code>id=\"item-3\"</code>要素がすべて「選択状態」となったとき、<code>id=\"select-all\"</code>要素を「選択状態」にしてください。</li><li><code>id=\"item-1\"</code>要素、<code>id=\"item-2\"</code>要素、<code>id=\"item-3\"</code>要素の一部が「未選択状態」となったとき、<code>id=\"select-all\"</code>要素を「未選択状態」にしてください。</li></ul>",
+        "ただし、「選択状態」とは<code>checked</code>属性が<code>true</code>であることを、「未選択状態」とは<code>checked</code>属性が<code>false</code>であることをいいます。"
+    ],
+    "limitationList": [
+        "なし"
+    ],
+    "html": "<div>\n    <div>\n        <input id=\"select-all\" type=\"checkbox\">\n        <label for=\"select-all\">すべて選択</label>\n    </div>\n    <hr>\n    <div>\n        <input id=\"item-1\" type=\"checkbox\">\n        <label for=\"item-1\">アイテム1</label>\n    </div>\n    <div>\n        <input id=\"item-2\" type=\"checkbox\">\n        <label for=\"item-2\">アイテム2</label>\n    </div>\n    <div>\n        <input id=\"item-3\" type=\"checkbox\">\n        <label for=\"item-3\">アイテム3</label>\n    </div>\n</div>",
+    "editorDefault": "document.addEventListener('DOMContentLoaded', () => {\n    // Your JavaScript code here.\n});\n",
+    "testCases": [
+        {
+            "id": "case-1",
+            "name": "通常テスト1",
+            "description": "「すべて選択チェックボックス」が選択状態となったときに、すべての「個別チェックボックス」が選択状態であることを確認します。",
+            "steps": [
+                {
+                    "type": "click",
+                    "selector": "#select-all"
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#select-all",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-1",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-2",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-3",
+                    "attribute": "checked",
+                    "value": true
+                }
+            ]
+        },
+        {
+            "id": "case-2",
+            "name": "通常テスト2",
+            "description": "1つの「個別チェックボックス」が選択状態となったときに、「すべて選択チェックボックス」が未選択状態であることを確認します。",
+            "steps": [
+                {
+                    "type": "click",
+                    "selector": "#item-1"
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#select-all",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-1",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-2",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-3",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "click",
+                    "selector": "#item-1"
+                },
+                {
+                    "type": "click",
+                    "selector": "#item-2"
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#select-all",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-1",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-2",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-3",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "click",
+                    "selector": "#item-2"
+                },
+                {
+                    "type": "click",
+                    "selector": "#item-3"
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#select-all",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-1",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-2",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-3",
+                    "attribute": "checked",
+                    "value": true
+                }
+            ]
+        },
+        {
+            "id": "case-3",
+            "name": "通常テスト3",
+            "description": "2つの「個別チェックボックス」が選択状態となったときに、「すべて選択チェックボックス」が未選択状態であることを確認します。",
+            "steps": [
+                {
+                    "type": "click",
+                    "selector": "#item-1"
+                },
+                {
+                    "type": "click",
+                    "selector": "#item-2"
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#select-all",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-1",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-2",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-3",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "click",
+                    "selector": "#item-1"
+                },
+                {
+                    "type": "click",
+                    "selector": "#item-3"
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#select-all",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-1",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-2",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-3",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "click",
+                    "selector": "#item-2"
+                },
+                {
+                    "type": "click",
+                    "selector": "#item-1"
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#select-all",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-1",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-2",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-3",
+                    "attribute": "checked",
+                    "value": true
+                }
+            ]
+        },
+        {
+            "id": "case-4",
+            "name": "通常テスト4",
+            "description": "すべての「個別チェックボックス」が選択状態となったときに、「すべて選択チェックボックス」が選択状態であることを確認します。",
+            "steps": [
+                {
+                    "type": "click",
+                    "selector": "#item-1"
+                },
+                {
+                    "type": "click",
+                    "selector": "#item-2"
+                },
+                {
+                    "type": "click",
+                    "selector": "#item-3"
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#select-all",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-1",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-2",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-3",
+                    "attribute": "checked",
+                    "value": true
+                }
+            ]
+        },
+        {
+            "id": "case-5",
+            "name": "通常テスト5",
+            "description": "「すべて選択チェックボックス」が未選択状態となったときに、すべての「個別チェックボックス」が未選択状態であることを確認します。",
+            "steps": [
+                {
+                    "type": "click",
+                    "selector": "#select-all"
+                },
+                {
+                    "type": "click",
+                    "selector": "#select-all"
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#select-all",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-1",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-2",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-3",
+                    "attribute": "checked",
+                    "value": false
+                }
+            ]
+        },
+        {
+            "id": "case-6",
+            "name": "通常テスト6",
+            "description": "先頭の「個別チェックボックス」が未選択状態となったときに、「すべて選択チェックボックス」が未選択状態であることを確認します。",
+            "steps": [
+                {
+                    "type": "click",
+                    "selector": "#select-all"
+                },
+                {
+                    "type": "click",
+                    "selector": "#item-1"
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#select-all",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-1",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-2",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-3",
+                    "attribute": "checked",
+                    "value": true
+                }
+            ]
+        },
+        {
+            "id": "case-7",
+            "name": "通常テスト7",
+            "description": "中間の「個別チェックボックス」が未選択状態となったときに、「すべて選択チェックボックス」が未選択状態であることを確認します。",
+            "steps": [
+                {
+                    "type": "click",
+                    "selector": "#select-all"
+                },
+                {
+                    "type": "click",
+                    "selector": "#item-2"
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#select-all",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-1",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-2",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-3",
+                    "attribute": "checked",
+                    "value": true
+                }
+            ]
+        },
+        {
+            "id": "case-8",
+            "name": "通常テスト8",
+            "description": "末尾の「個別チェックボックス」が未選択状態となったときに、「すべて選択チェックボックス」が未選択状態であることを確認します。",
+            "steps": [
+                {
+                    "type": "click",
+                    "selector": "#select-all"
+                },
+                {
+                    "type": "click",
+                    "selector": "#item-3"
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#select-all",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-1",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-2",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-3",
+                    "attribute": "checked",
+                    "value": false
+                }
+            ]
+        },
+        {
+            "id": "case-9",
+            "name": "複数回繰り返しテスト1",
+            "description": "「個別チェックボックス」の選択状態の切り替えを複数回行ったときに、各チェックボックスの選択状態が正しいことを確認します。",
+            "steps": [
+                {
+                    "type": "click",
+                    "selector": "#item-1"
+                },
+                {
+                    "type": "click",
+                    "selector": "#select-all"
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#select-all",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-1",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-2",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-3",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "click",
+                    "selector": "#item-2"
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#select-all",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-1",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-2",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-3",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "click",
+                    "selector": "#select-all"
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#select-all",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-1",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-2",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-3",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "click",
+                    "selector": "#item-3"
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#select-all",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-1",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-2",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-3",
+                    "attribute": "checked",
+                    "value": false
+                },
+                {
+                    "type": "click",
+                    "selector": "#item-3"
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#select-all",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-1",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-2",
+                    "attribute": "checked",
+                    "value": true
+                },
+                {
+                    "type": "assertAttribute",
+                    "selector": "#item-3",
+                    "attribute": "checked",
+                    "value": true
+                }
+            ]
+        }
+    ]
+}
