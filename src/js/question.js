@@ -140,6 +140,15 @@ class BaseStep {
     _execute(targetElement) {
         throw new Error('Not implemented');
     }
+
+    /**
+     * ステップの文字列表現を返す。
+     * （中身は、子クラスで実装）
+     * @return {string} ステップの文字列表現
+     */
+    humanize() {
+        throw new Error('Not implemented');
+    }
 }
 
 
@@ -151,6 +160,14 @@ class ClickStep extends BaseStep {
     _execute(targetElement) {
         targetElement.click();
     }
+
+    /**
+     * ステップの文字列表現を返す。
+     * @return {string} ステップの文字列表現
+     */
+    humanize() {
+        return `<code>${this.selector}</code>要素をクリックする。`;
+    }
 }
 
 
@@ -161,6 +178,14 @@ class InputStep extends BaseStep {
      */
     _execute(targetElement) {
         targetElement.value = this.options.value;
+    }
+
+    /**
+     * ステップの文字列表現を返す。
+     * @return {string} ステップの文字列表現
+     */
+    humanize() {
+        return `<code>${this.selector}</code>要素に<code>${this.options.value}</code>を入力する。`;
     }
 }
 
@@ -176,6 +201,15 @@ class AssertStep extends BaseStep {
             throw new Error(`Assertion failed: ${targetElement.textContent} !== ${expectedValue}`);
         }
     }
+
+    /**
+     * ステップの文字列表現を返す。
+     * @return {string} ステップの文字列表現
+     */
+    humanize() {
+        const expectedValue = this.options.value;
+        return `<code>${this.selector}</code>要素の<code>textContent</code>属性の値が<code>${expectedValue}</code>であることを確認する。`;
+    }
 }
 
 
@@ -190,6 +224,16 @@ class AssertAttributeStep extends BaseStep {
         if (targetElement[attribute] !== expectedValue) {
             throw new Error(`Assertion failed: ${targetElement[attribute]} !== ${expectedValue}`);
         }
+    }
+
+    /**
+     * ステップの文字列表現を返す。
+     * @return {string} ステップの文字列表現
+     */
+    humanize() {
+        const attribute = this.options.attribute;
+        const expectedValue = this.options.value;
+        return `<code>${this.selector}</code>要素の<code>${attribute}</code>属性の値が<code>${expectedValue}</code>であることを確認する。`;
     }
 }
 

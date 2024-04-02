@@ -6,10 +6,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="css/base.css" rel="stylesheet" type="text/css">
         <link href="css/question-detail.css" rel="stylesheet" type="text/css">
+        <link href="css/components/modal.css" rel="stylesheet" type="text/css">
+        <link href="css/components/test_case_modal.css" rel="stylesheet" type="text/css">
         <link href="css/lib/prismjs/prism.css" rel="stylesheet" type="text/css">
         <script src="js/base.js" type="text/javascript" defer></script>
         <script src="js/question.js" type="text/javascript" defer></script>
         <script src="js/question-list.js" type="text/javascript" defer></script>
+        <script src="js/components/modal.js" type="text/javascript" defer></script>
+        <script src="js/components/test_case_modal.js" type="text/javascript" defer></script>
         <script src="js/lib/prismjs/prism.js" type="text/javascript" defer></script>
         <script src="js/lib/monaco-editor/vs/loader.js" type="text/javascript" defer></script>
     </head>
@@ -96,6 +100,9 @@
                 <div id="id-question-list-container"></div>
                 <div id="id-question-detail-container"></div>
             </div>
+            <div id="id-modal" class="c-modal__container">
+                <div class="js-modal__content"></div>
+            </div>
         </main>
         <template id="id-template__question-list-item">
             <h3 class="js-difficulty"></h3>
@@ -176,6 +183,22 @@
                     </table>
                 </div>
                 <div class="c-question-detail__score-virtual-env js-virtual-env"></div>
+            </div>
+        </template>
+        <template id="id-template__test-case-modal-content">
+            <div class="c-test-case-modal__container">
+                <div class="c-test-case-modal__content">
+                    <h3 class="js-title"></h3>
+                    <hr>
+                    <h4>
+                        テストケースの概要
+                    </h4>
+                    <div class="js-description"></div>
+                    <h4>
+                        テストケースフロー
+                    </h4>
+                    <ol class="js-flow"></ol>
+                </div>
             </div>
         </template>
     </body>

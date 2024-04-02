@@ -115,14 +115,24 @@ class QuestionDisplayManager {
                 result.appendChild(this.#buildSandbox(question.html, monacoEditor.getValue()));
             });
             // 採点のセットアップ
-            scoreTableBody.innerHTML = question.testCases.map((testCase) => {
-                return (
-                    `<tr data-id="${testCase.id}">
-                        <td>${testCase.name}</td>
-                        <td class="js-score-result">-</td>
-                    </tr>`
-                )
-            }).join('');
+            const testCaseModal = new TestCaseModal();
+            question.testCases.forEach((testCase) => {
+                const tr = document.createElement('tr');
+                tr.setAttribute('data-id', testCase.id);
+                tr.innerHTML = (
+                    `<td>
+                        <span class="js-test-case-detail text-link">
+                            ${testCase.name}
+                        </span>
+                    </td>
+                    <td class="js-score-result">-</td>`
+                );
+                tr.querySelector('.js-test-case-detail').addEventListener('click', () => {
+                    testCaseModal.open(testCase);
+                });
+                scoreTableBody.appendChild(tr);
+            });
+            // 「採点」ボタンクリック時
             scoringButtonElement.addEventListener('click', () => {
                 // 採点環境の初期化
                 virtualEnv.innerHTML = '';
