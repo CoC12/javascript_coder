@@ -192,10 +192,18 @@ class QuestionDisplayManager {
         const iframeElement = this.#buildSandbox(html, script);
         iframeElement.addEventListener('load', () => {
             const isAccepted = testCase.isAccepted(iframeElement.contentDocument, this.debug);
-            scoreResultElement.innerHTML = (
+            const [styleClass, tooltipText, label] = (
                 isAccepted
-                    ? '<span class="c-question-detail__score score-ac">AC</span>'
-                    : '<span class="c-question-detail__score score-wa">WA</span>'
+                    ? ['c-question-detail__score score-ac', '正解', 'AC']
+                    : ['c-question-detail__score score-wa', '不正解', 'WA']
+            )
+            scoreResultElement.innerHTML = (
+                `<span class="${styleClass} c-tooltip__target">
+                    ${label}
+                    <span class="c-tooltip__text">
+                        ${tooltipText}
+                    </span>
+                </span>`
             );
         });
         virtualEnv.appendChild(iframeElement);
