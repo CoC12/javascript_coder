@@ -1,0 +1,35 @@
+.c-tooltip__target {
+    position: relative;
+    cursor: default;
+
+    .c-tooltip__text {
+        position: absolute;
+        top: -200%;
+        left: 50%;
+        z-index: -1;
+        width: max-content;
+        padding: 5px;
+        color: #ffffff;
+        background-color: #000000;
+        border-radius: 6px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        transform: translateX(-50%);
+
+        &::after {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            content: "";
+            border-color: black transparent transparent transparent;
+            border-style: solid;
+            border-width: 5px;
+          }
+    }
+
+    &:hover .c-tooltip__text {
+        z-index: 1;
+        opacity: 1;
+    }
+}

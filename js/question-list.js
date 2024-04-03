@@ -10,6 +10,10 @@ const questionListData = [
                 'id': 'a-002',
                 'label': 'A-002: カウンター',
             },
+            {
+                'id': 'a-003',
+                'label': 'A-003: すべて選択',
+            },
         ],
     },
     {

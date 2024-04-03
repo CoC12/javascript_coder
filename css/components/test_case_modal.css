@@ -1,0 +1,22 @@
+.c-test-case-modal__container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    width: 40%;
+    height: 70%;
+    padding: 40px;
+    background-color: #ffffff;
+    transform: translate(-50%, -50%);
+
+    @media (width < 900px) {
+        width: 80%;
+        padding: 20px;
+    }
+
+    .c-test-case-modal__content {
+        height: 100%;
+        margin: auto;
+        overflow: auto;
+    }
+}
